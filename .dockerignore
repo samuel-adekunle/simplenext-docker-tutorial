@@ -34,5 +34,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 
-# intellij
-.idea
+# Extra Docker Ignore
+Dockerfile*
+docker-compose.yml
+.dockerignore
+.gitignore
+.git/
+nginx/
