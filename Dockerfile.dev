@@ -1,13 +1,11 @@
 FROM node:alpine
 
-WORKDIR "/app"
-
-COPY package.json .
-RUN npm install
+WORKDIR "/home/app"
 
 EXPOSE 3000
 
-USER node
+COPY package.json .
+RUN npm install
 
 COPY . .
 
