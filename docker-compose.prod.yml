@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  nextjs:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    image: europe-west2-docker.pkg.dev/docker-course-352310/docker-repo/simplenext_nextjs:latest
+
+  nginx:
+    build: nginx
+    image: europe-west2-docker.pkg.dev/docker-course-352310/docker-repo/simplenext_nginx:latest
+    ports:
+      - "80:80"
