@@ -1,0 +1,27 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile.dev --tag samueladekunle/simplenext-dev:latest
+      
+    - name: Docker Run Action
+      uses: addnab/docker-run-action@v3
+      with:
+        # Image
+        image: samueladekunle/simplenext-dev:latest
+        # Run command in container
+        run: jest
