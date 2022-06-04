@@ -19,5 +19,5 @@ jobs:
       run: docker build . --file Dockerfile.dev --tag samueladekunle/simplenext-dev:latest
       
     - name: Run the Jest tests
-      run: docker run samueladekunle/simplenext-dev:latest jest
+      run: docker run samueladekunle/simplenext-dev:latest npm run test
       
