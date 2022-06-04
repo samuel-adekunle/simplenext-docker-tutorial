@@ -59,6 +59,4 @@ jobs:
         run: docker compose build --parallel
 
       - name: Publish images
-        run: |
-          docker push europe-west2-docker.pkg.dev/docker-course-352310/docker-repo/simplenext_nextjs:latest
-          docker push europe-west2-docker.pkg.dev/docker-course-352310/docker-repo/simplenext_nginx:latest
+        run: docker compose push
