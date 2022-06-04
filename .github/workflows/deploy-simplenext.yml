@@ -5,10 +5,26 @@ on:
     branches: [ "main" ]
 
 jobs:
-  lint:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
+      - uses: satackey/action-docker-layer-caching@v0.0.11
+        continue-on-error: true
+
+      - name: Build the docker image
+        run: docker build . --file Dockerfile.dev --tag samueladekunle/simplenext-dev:latest
+
+
+  lint:
+    runs-on: ubuntu-latest
+    needs: [ build ]
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: satackey/action-docker-layer-caching@v0.0.11
+        continue-on-error: true
 
       - name: Build the docker image
         run: docker build . --file Dockerfile.dev --tag samueladekunle/simplenext-dev:latest
@@ -18,8 +34,12 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+    needs: [ build ]
     steps:
       - uses: actions/checkout@v3
+
+      - uses: satackey/action-docker-layer-caching@v0.0.11
+        continue-on-error: true
 
       - name: Build the docker image
         run: docker build . --file Dockerfile.dev --tag samueladekunle/simplenext-dev:latest
@@ -37,6 +57,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
+      - uses: satackey/action-docker-layer-caching@v0.0.11
+        continue-on-error: true
 
       - id: auth
         name: Configure gcloud authentication
