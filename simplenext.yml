@@ -1,0 +1,10 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: simplenext
+  port: 3000
+spec:
+  template:
+    spec:
+      containers:
+        - image: 'europe-west2-docker.pkg.dev/docker-course-352310/docker-repo/simplenext:latest'
