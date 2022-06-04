@@ -1,9 +1,7 @@
-name: Docker Image CI
+name: Deploy simplenext
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
     branches: [ "main" ]
 
 jobs:

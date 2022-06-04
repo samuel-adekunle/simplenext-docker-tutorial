@@ -1,0 +1,28 @@
+name: Test simplenext
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build the docker image
+        run: docker build . --file Dockerfile.dev --tag samueladekunle/simplenext-dev:latest
+
+      - name: Run the jest tests
+        run: docker run samueladekunle/simplenext-dev:latest npm run lint
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build the docker image
+        run: docker build . --file Dockerfile.dev --tag samueladekunle/simplenext-dev:latest
+
+      - name: Run the jest tests
+        run: docker run samueladekunle/simplenext-dev:latest npm run test -- --coverage
