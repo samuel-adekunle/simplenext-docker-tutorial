@@ -4,12 +4,12 @@ WORKDIR "/home/app"
 
 RUN npm install -g pm2
 
-EXPOSE 3000
-
 COPY package.json .
 RUN npm install
 
 COPY . .
 RUN npm run build
 
-CMD [ "pm2-runtime", "npm", "--", "start" ]
+EXPOSE 3000
+
+CMD [ "pm2-runtime", "npm", "--", "start", "--", "-p", "3000"]

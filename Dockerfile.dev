@@ -2,11 +2,11 @@ FROM node:alpine
 
 WORKDIR "/home/app"
 
-EXPOSE 3000
-
 COPY package.json .
 RUN npm install
 
 COPY . .
 
-CMD ["npm", "run", "dev"]
+EXPOSE 3000
+
+CMD ["npm", "run", "dev", "--", "-p", "3000"]

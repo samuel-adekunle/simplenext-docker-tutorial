@@ -56,7 +56,7 @@ jobs:
         run: echo "y" | gcloud auth configure-docker europe-west2-docker.pkg.dev
 
       - name: Build images
-        run: docker build -t europe-west2-docker.pkg.dev/docker-course-352310/docker-repo/simplenext:latest .
+        run: docker build --file Dockerfile.prod -t europe-west2-docker.pkg.dev/docker-course-352310/docker-repo/simplenext:latest .
 
       - name: Publish images
         run: docker push europe-west2-docker.pkg.dev/docker-course-352310/docker-repo/simplenext:latest
@@ -70,6 +70,8 @@ jobs:
       id-token: 'write'
 
     steps:
+      - uses: actions/checkout@v3
+
       - id: auth
         name: Configure gcloud authentication
         uses: 'google-github-actions/auth@v0'
@@ -80,8 +82,8 @@ jobs:
       - id: 'deploy'
         uses: 'google-github-actions/deploy-cloudrun@v0'
         with:
-          service: 'simplenext'
-          image: 'europe-west2-docker.pkg.dev/docker-course-352310/docker-repo/simplenext:latest'
+          region: europe-west2
+          metadata: "simplenext.yml"
 
       - name: 'Use output'
         run: 'curl "${{ steps.deploy.outputs.url }}"'
