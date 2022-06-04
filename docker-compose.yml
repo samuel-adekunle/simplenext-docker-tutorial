@@ -4,6 +4,8 @@ services:
   nextjs:
     build: .
     image: europe-west2-docker.pkg.dev/docker-course-352310/docker-repo/simplenext_nextjs:latest
+    ports:
+      - "3000:3000"
   nginx:
     build: nginx
     image: europe-west2-docker.pkg.dev/docker-course-352310/docker-repo/simplenext_nginx:latest

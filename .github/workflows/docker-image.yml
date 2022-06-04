@@ -56,7 +56,17 @@ jobs:
         run: echo "y" | gcloud auth configure-docker europe-west2-docker.pkg.dev
 
       - name: Build images
-        run: docker build -t europe-west2-docker.pkg.dev/docker-course-352310/docker-repo/simplenext:latest
+        run: docker build -t europe-west2-docker.pkg.dev/docker-course-352310/docker-repo/simplenext:latest .
 
       - name: Publish images
         run: docker push europe-west2-docker.pkg.dev/docker-course-352310/docker-repo/simplenext:latest
+
+      - id: deploy
+        name: Deploy app to cloud run
+        uses: google-github-actions/deploy-cloudrun@v0
+        with:
+          service: 'simplenext'
+          image: 'gcr.io/cloudrun/hello'
+
+      - name: 'Use output'
+        run: 'curl "${{ steps.deploy.outputs.url }}"'
