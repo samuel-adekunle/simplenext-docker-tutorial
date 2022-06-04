@@ -27,7 +27,7 @@ jobs:
         run: docker build . --file Dockerfile.dev --tag samueladekunle/simplenext-dev:latest
 
       - name: Run the jest tests
-        run: docker run samueladekunle/simplenext-dev:latest npm run test
+        run: docker run samueladekunle/simplenext-dev:latest npm run test -- --coverage
 
   publish:
     runs-on: ubuntu-latest
@@ -61,12 +61,27 @@ jobs:
       - name: Publish images
         run: docker push europe-west2-docker.pkg.dev/docker-course-352310/docker-repo/simplenext:latest
 
-      - id: deploy
-        name: Deploy app to cloud run
-        uses: google-github-actions/deploy-cloudrun@v0
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [ publish ]
+
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+      - id: auth
+        name: Configure gcloud authentication
+        uses: 'google-github-actions/auth@v0'
+        with:
+          workload_identity_provider: 'projects/799494570525/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
+          service_account: 'docker-image-service-account@docker-course-352310.iam.gserviceaccount.com'
+
+      - id: 'deploy'
+        uses: 'google-github-actions/deploy-cloudrun@v0'
         with:
           service: 'simplenext'
-          image: 'gcr.io/cloudrun/hello'
+          image: 'europe-west2-docker.pkg.dev/docker-course-352310/docker-repo/simplenext:latest'
 
       - name: 'Use output'
         run: 'curl "${{ steps.deploy.outputs.url }}"'
