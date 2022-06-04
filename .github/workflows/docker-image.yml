@@ -83,7 +83,7 @@ jobs:
         uses: 'google-github-actions/deploy-cloudrun@v0'
         with:
           region: europe-west2
-          metadata: "simplenext.yml"
+          metadata: "service.yml"
 
       - name: 'Use output'
         run: 'curl "${{ steps.deploy.outputs.url }}"'
