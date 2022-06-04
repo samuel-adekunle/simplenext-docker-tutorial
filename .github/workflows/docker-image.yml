@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Build and Test Image
 
 on:
   push:
@@ -13,11 +13,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile.dev --tag samueladekunle/simplenext-dev:latest
-      
-    - name: Run the Jest tests
-      run: docker run samueladekunle/simplenext-dev:latest npm run test
-      
+      - uses: actions/checkout@v3
+
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile.dev --tag samueladekunle/simplenext-dev:latest
+
+      - name: Run the Jest tests
+        run: docker run samueladekunle/simplenext-dev:latest npm run test
