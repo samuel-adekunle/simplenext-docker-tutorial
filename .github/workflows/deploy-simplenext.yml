@@ -14,7 +14,7 @@ jobs:
         continue-on-error: true
 
       - name: Build the docker image
-        run: docker build . --file Dockerfile.dev --tag samueladekunle/simplenext-dev:latest
+        run: docker build --file Dockerfile.prod -t europe-west2-docker.pkg.dev/docker-course-352310/docker-repo/simplenext:latest .
 
 
   lint:
@@ -27,7 +27,7 @@ jobs:
         continue-on-error: true
 
       - name: Build the docker image
-        run: docker build . --file Dockerfile.dev --tag samueladekunle/simplenext-dev:latest
+        run: docker build --file Dockerfile.prod -t europe-west2-docker.pkg.dev/docker-course-352310/docker-repo/simplenext:latest .
 
       - name: Run the jest tests
         run: docker run samueladekunle/simplenext-dev:latest npm run lint
@@ -42,7 +42,7 @@ jobs:
         continue-on-error: true
 
       - name: Build the docker image
-        run: docker build . --file Dockerfile.dev --tag samueladekunle/simplenext-dev:latest
+        run: docker build --file Dockerfile.prod -t europe-west2-docker.pkg.dev/docker-course-352310/docker-repo/simplenext:latest .
 
       - name: Run the jest tests
         run: docker run samueladekunle/simplenext-dev:latest npm run test -- --coverage
