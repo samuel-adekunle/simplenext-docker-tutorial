@@ -9,4 +9,3 @@ spec:
         - image: 'europe-west2-docker.pkg.dev/docker-course-352310/docker-repo/simplenext:latest'
           ports:
             - containerPort: 3000
-              name: http1
